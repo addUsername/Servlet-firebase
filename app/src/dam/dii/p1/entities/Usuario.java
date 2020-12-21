@@ -30,7 +30,6 @@ public class Usuario {
 	}
 	public void setPass2(String pass2) {
 		this.pass2 = pass2;
-	}
-	
+	}	
 	
 }

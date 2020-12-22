@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import dam.dii.p1.entities.Usuario;
-import utils.Mapper;
+import dam.dii.p1.utils.Mapper;
 
 public class Persistence {
 

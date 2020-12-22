@@ -1,0 +1,74 @@
+@charset "ISO-8859-1";
+*{
+	margin: auto;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.center_this {
+	width:440px;
+	display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    
+	border-bottom: 5px solid black;
+	border-right: 5px solid black;
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+.header{
+	background-color: gray;
+	font-family: cursive;
+	font-style: normal;
+	text-align: center;
+	width: 450px;
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+	grid-column: 1 / -1;
+	text-align: right;
+}
+.form{
+	
+	border-top: 5px solid black;
+	border-right: 5px solid black;
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+	display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(3, 1fr);
+	text-align: left;
+	width: 400px;
+}
+input{
+border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+#expand_this{
+	grid-column: 1 / -1;
+	text-align: right;
+}
+/*path { fill: orange; }*/
+
+.colorPicker{
+	display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    justify-content:flex-start;
+    width: 50px;
+}
+.drop > svg {
+	width: 55%;
+	height: 50%;
+	
+}
+#white {
+	fill: white;
+}
+#pink {
+	fill: pink;
+}
+#blue {
+	fill: blue;
+}
+#black {
+	fill: black;
+}

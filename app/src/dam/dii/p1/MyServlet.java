@@ -33,7 +33,7 @@ public class MyServlet extends HttpServlet {
 	 */
 	public MyServlet() {
 		super();
-		per = new Persistence("mySecret", "https://my-awesome-test-1c310-default-rtdb.firebaseio.com/");
+		per = new Persistence("mySecret", "https://[].firebaseio.com/");
 
 	}
 

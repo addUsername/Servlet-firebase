@@ -16,8 +16,9 @@ public class Mapper {
 			user.setName(pair[3]);
 			user.setPass(pair[7]);
 		} else {
-			user.setName(null);
-			user.setPass(null);
+			user.setName("");
+			user.setPass("");
+			user.setPass2("");
 		}
 		return user;
 	}

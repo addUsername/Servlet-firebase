@@ -52,7 +52,8 @@ public class JwtHandler {
 
 		Claims cl = Jwts.claims().setSubject(user.getName());
 		cl.putAll(map);
-		return Jwts.builder().setClaims(cl).setSubject(user.getName()).setIssuedAt(new Date())
+		cl.setSubject(user.getName());
+		return Jwts.builder().setClaims(cl).setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime() * EXPIRATION)).signWith(ALGORITHM, secret).compact();
 	}
 
@@ -79,14 +80,15 @@ public class JwtHandler {
 	/**
 	 * Parse claims added in
 	 * {@link JwtHandler#generateTokenWithClaims(Usuario, HashMap)}
-	 * 
+	 *
 	 * @param token
 	 * @param username
 	 * @return
 	 */
-	public HashMap<String, Object> getClaimsFromToken(String token, String username) {
+	public String getClaimsFromToken(String token, String username) {
 		if (!isValid(token, username))
 			return null;
-		return (HashMap<String, Object>) Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		return new HashMap<>(Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody()).get("color")
+				.toString();
 	}
 }

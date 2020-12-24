@@ -90,9 +90,8 @@ public class Crypt {
 	 * @throws NoSuchAlgorithmException
 	 */
 
-	public static SecretKey generateKey(String path) {
-		byte[] salt = "salt".getBytes();
-		char[] key = "moreSecrets".toCharArray();
+	public static SecretKey generateKey(String path, byte[] salt, char[] key) {
+
 		String FILENAME = path;// "key.dat";
 		String ALGORITHM = "PBKDF2WithHmacSHA1";
 		SecretKey mySecret = null;

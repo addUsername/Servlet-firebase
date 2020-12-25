@@ -9,9 +9,9 @@
 </head>
 <body>
 <div class="container">
-<h2 class="header" id="usererror">oh no, <%=response.getHeader("CustomErrorTitle")%></h2>
-<h2>code error says.. <%=response.getHeader("CustomErrorString") %>,</h2>
-<h3> please  <a href="${pageContext.request.contextPath}">  try again</a>, we believe in you (L)</h3>
+<h2 class="header" id="servererror">oh no, <%=response.getStatus()%></h2>
+<h2>Server says.. null</h2>
+<h3> please  <a href="${pageContext.request.contextPath}"> try again</a></h3>
 </div>
 <div class="github"  style="background-color: rgba(235,235,235, 0); text-align:right; width: 30%;">
 	  		<h2><a href="https://github.com/addUsername/Servlet-firebase">Source code

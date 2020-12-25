@@ -1,0 +1,74 @@
+:root {
+  --primary: #1e90ff;
+  --secondary: white;
+}
+*{
+	margin: auto;
+	padding: 0;
+	box-sizing: border-box;
+}
+.container{
+	background-color: var(--secondary);
+	min-width:400px;
+	max-width:600px;
+	padding-top:40px;
+	width: 50%;
+	overflow-wrap: break-word;
+	display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows:  repeat(6, 1fr);
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;   
+}
+.header{
+	background-color: var(--primary);
+	font-family: cursive;
+	font-style: normal;
+	text-align: center;
+	width: 100%;
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+	grid-column: 1 / -1;
+}
+.subHeader{
+	font-family: cursive;
+	font-style: normal;
+	text-align: center;
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+	grid-column: 1 / -1;
+}
+.token{
+	width:99%;
+	border-bottom: 5px solid black;
+	border-left: 5px solid black;
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+	grid-column: 1 / -1;
+	text-align: center;
+}
+.token p{
+	width:90%
+}
+.row {
+	grid-column: 1 / -1;
+}
+#tick {
+	fill: green;
+}
+#cross {
+	fill: red;
+}
+p {
+	padding-top: 5px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+#a {	 
+  visibility: hidden;
+}
+#b {	 
+  visibility: hidden;
+}

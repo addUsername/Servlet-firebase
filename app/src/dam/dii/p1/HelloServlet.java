@@ -3,7 +3,6 @@ package dam.dii.p1;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ import dam.dii.p1.utils.Tune;
 /**
  * Servlet implementation class HelloServlet
  */
-@WebServlet("/hello")
+//@WebServlet("/auth")
 public class HelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private JwtHandler jwt;
@@ -34,24 +33,48 @@ public class HelloServlet extends HttpServlet {
 	 *      response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("DO GET HELLOSERVLET");
+		System.out.println("DO post HELLOSERVLET");
 
-		Cookie myJwtCookie = getJwtCookie(request.getCookies());
+		Cookie cook = getJwtCookie(request.getCookies());
+		String token = null;
+		Boolean headers = false, cookie = false, httpOnly = false;
+		if (cook != null) {
+			cookie = true;
+			token = cook.getValue();
+			httpOnly = false; // do this
+		} else if (request.getHeader("auth") != null) {
+			headers = true;
+			token = request.getHeader("auth").toString();
+		} else if (request.getAttribute("auth") != null) {
 
-		if (myJwtCookie == null || request.getAttribute("name") == null) {
-			response = Tune.error(response, "There isn't any cookie ",
+			token = request.getAttribute("auth").toString();
+		}
+		if (token == null) {
+			response = Tune.error(response, "There isn't any token ",
 					"pls allow cookies, it's just one with your personal jwt token");
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 			return;
 		}
-		if (jwt.isValid(myJwtCookie.getValue(), (String) request.getAttribute("name"))) {
-			String color = jwt.getClaimsFromToken(myJwtCookie.getValue(), (String) request.getAttribute("name"));
-			System.out.println("COLOOOORRRRR");
-			System.out.println(color);
+		if (request.getAttribute("name") == null) {
+			response = Tune.error(response, "There isn't any token ",
+					"pls allow cookies, it's just one with your personal jwt token");
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
+		}
+
+		if (jwt.isValid(token, (String) request.getAttribute("name"))) {
+			String color = jwt.getClaimsFromToken(token, (String) request.getAttribute("name"));
+
+			response = Tune.response(response, token, headers, cookie, httpOnly);
 			request.setAttribute("colorFromJwt", color);
-			getServletContext().getRequestDispatcher("/WEB-INF/hello/hello.jsp").forward(request, response);
+			if (request.getAttribute("toDocs") != null) {
+				System.out.println("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+				getServletContext().getRequestDispatcher("/WEB-INF/doc/index.html");
+			}
+
+			getServletContext().getRequestDispatcher("/WEB-INF/hello.jsp").include(request, response);
 			return;
 		} else {
 			response = Tune.error(response, "No cabron ",
@@ -74,11 +97,10 @@ public class HelloServlet extends HttpServlet {
 	 *      response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("DO post HELLOSERVLET");
-		System.out.println(request);
-		doGet(request, response);
+		System.out.println("DO get HELLOSERVLET");
+		doPost(request, response);
 	}
 }

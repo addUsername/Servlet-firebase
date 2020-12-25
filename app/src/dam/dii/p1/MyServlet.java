@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import javax.crypto.SecretKey;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,7 @@ import dam.dii.p1.utils.Tune;
 /**
  * Servlet implementation class MyServlet
  */
-@WebServlet("/myServlet")
+//@WebServlet("/login")
 public class MyServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -52,9 +51,14 @@ public class MyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("DO GET!!");
-		response = Tune.error(response, " wrong direction",
-				"There isn't any data, if you come redirected from login or sign in.. this is bad.");
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		System.out.println(request.getParameter("color"));
+
+		/*
+		 * response = Tune.error(response, " wrong direction",
+		 * "There isn't any data, if you come redirected from login or sign in.. this is bad."
+		 * ); response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		 */
+		doPost(request, response);
 		return;
 	}
 
@@ -125,9 +129,8 @@ public class MyServlet extends HttpServlet {
 
 			if (Arrays.equals(cry.decode(usuario.getPass()), cry.decode(storedUser.getPass()))) {
 				// LOGGED
-//HOJO /hello
 				String token = jwt.generateTokenWithClaims(usuario, claims);
-				getServletContext().getRequestDispatcher("/WEB-INF/hello/hello.jsp").forward(
+				getServletContext().getRequestDispatcher("/auth").include(
 						Tune.request(request, usuario.getName(), token, false, is(request.getParameter("body"))),
 						Tune.response(response, token, is(request.getParameter("header")),
 								is(request.getParameter("cookie")), is(request.getParameter("httponly"))));
@@ -145,7 +148,7 @@ public class MyServlet extends HttpServlet {
 				boolean signed = per.save(usuario);
 				String token = jwt.generateToken(usuario);
 
-				getServletContext().getRequestDispatcher("/WEB-INF/hello/hello.jsp").forward(
+				getServletContext().getRequestDispatcher("/auth").forward(
 						Tune.request(request, usuario.getName(), token, signed, is(request.getParameter("body"))),
 						Tune.response(response, token, is(request.getParameter("header")),
 								is(request.getParameter("cookie")), is(request.getParameter("httponly"))));

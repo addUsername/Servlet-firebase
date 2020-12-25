@@ -33,7 +33,7 @@ public class Tune {
 		request.setAttribute("name", username);
 		request.setAttribute("signed", signed);
 		if (attribute) {
-			request.setAttribute("jwt", token);
+			request.setAttribute("auth", token);
 		}
 		return request;
 	}

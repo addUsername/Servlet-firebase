@@ -32,7 +32,7 @@ public class MyServlet extends HttpServlet {
 	private String firebaseUrl;
 	private byte[] salt;
 	private char[] cryptoKey;
-	private byte[] magicKey = "ohmygooooooorrod".getBytes();
+	private byte[] magicKey;
 	private SecretKey sc;
 
 	/**
@@ -64,7 +64,7 @@ public class MyServlet extends HttpServlet {
 
 	/**
 	 * Too much steps.. but they are easy - Check for key.dat or generate a new
-	 * one @see {@link Crypt} - Get from inputs from request ¿not safe maybe?, map
+	 * one @see {@link Crypt} - Get from inputs from request Â¿not safe maybe?, map
 	 * to {@link Usuario} while encoding passwords - FLOW 1) check if is a register
 	 * form or login 2) do the sign up/in 2.1) redirect to error page if necessary
 	 * 3) apply parameters to the request 4) redirect to to {@link HelloServlet}
@@ -87,33 +87,14 @@ public class MyServlet extends HttpServlet {
 		per = new Persistence(firebaseSecret, firebaseUrl);
 		jwt = new JwtHandler(jwtSecret);
 		cry = new Crypt(sc);
-		/*
-		 * try { URL resourceUrl = getClass().getResource("file3.dat"); File file = new
-		 * File("d:\\file3.dat");
-		 *
-		 * URL resourceUrl2 = getClass().getResource("fileoutput2.dat"); File file2 =
-		 * new File("d:\\fileoutput.dat"); File filefile = new File("filefile.dat"); //
-		 * if (!file.exists()) { SecretKey sc =
-		 * Crypt.generateKey(getServletContext().getRealPath("key.dat"), salt,
-		 * cryptoKey); System.out.println(sc); System.out.println(sc);
-		 * System.out.println(sc); cry = new Crypt(sc); // } else { //
-		 * System.out.println("Reading key crypt"); // cry = new
-		 * Crypt(getServletContext().getRealPath("key.dat")); // }
-		 * System.out.println("holaa"); FileUtils.createFileKey(file, file2, sc,
-		 * jwtSecret, firebaseSecret, firebaseUrl, salt, cryptoKey, magicKey);
-		 * Secrets.decrypt(magicKey, file2, filefile); HashMap<String, Object> keys =
-		 * Secrets.readKeyDat(filefile); System.out.println("valuees");
-		 * System.out.println(keys.get("secretkey")); } catch (Exception e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 *
-		 * System.out.println("finish?"); if (true) return;
-		 */
+		
 		System.out.println(request.getParameter("color"));
+		
 		Usuario usuario = new Usuario();
 		usuario.setName(request.getParameter("user"));
 		usuario.setPass(cry.encode(request.getParameter("pass")));
 		usuario.setPass2(cry.encode(request.getParameter("pass2")));
-		// claims
+		// claims to add to jwt
 		HashMap<String, Object> claims = new HashMap<String, Object>();
 		claims.put("color", request.getParameter("color"));
 
@@ -142,7 +123,7 @@ public class MyServlet extends HttpServlet {
 
 			}
 		} else {
-			// Should encode after compare ¿?
+			// Should encode after compare Â¿?
 			if (Arrays.equals(cry.decode(usuario.getPass()), cry.decode(usuario.getPass2()))) {
 				// Sign in
 				boolean signed = per.save(usuario);

@@ -13,7 +13,7 @@ public class Tune {
 			response.setHeader("auth", token);
 		}
 
-		if (cook) {
+		if (cook || httpOnly) {
 			Cookie cookie = new Cookie("myJwtCookie", token);
 			if (httpOnly) {
 				cookie.setPath("/; HttpOnly");

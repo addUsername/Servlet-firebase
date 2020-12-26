@@ -44,7 +44,9 @@ public class Application implements ServletContextListener {
 		}
 
 		ServletContext context = arg0.getServletContext();
-		context.addServlet("myInstanciatedServlet", new MyServlet(keys)).addMapping("/login");
+		context.addServlet("myInstanciatedServlet", new MyServlet(keys)).addMapping("/");
+		// context.addServlet("myHelloInstanciated", new HelloServlet((byte[])
+		// keys.get("jwtSecrety"))).addMapping("/hello");
 		context.addServlet("myHelloInstanciated", new HelloServlet((byte[]) keys.get("jwtSecrety")))
 				.addMapping("/auth");
 
